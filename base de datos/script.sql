@@ -1,14 +1,14 @@
--- Creación de la base de datos (opcional, en Supabase ya viene una asignada)
--- CREATE DATABASE appturismo;
-
 -- ============================
 -- TABLA: Usuario
 -- ============================
 CREATE TABLE Usuario (
     id_usuario SERIAL PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
-    idioma_preferido VARCHAR(50),
-    pais_origen VARCHAR(100)
+    apellido VARCHAR(100) NOT NULL,
+    email VARCHAR(150) UNIQUE NOT NULL,
+    contraseña VARCHAR(255) NOT NULL,
+    fecha_nacimiento DATE,
+    foto_perfil TEXT
 );
 
 -- ============================
@@ -34,10 +34,10 @@ CREATE TABLE Destino (
 );
 
 -- ============================
--- TABLA: Lugar
+-- TABLA: Lugares
 -- ============================
-CREATE TABLE Lugar (
-    id_lugar SERIAL PRIMARY KEY,
+CREATE TABLE Lugares (
+    id_lugares SERIAL PRIMARY KEY,
     id_destino INT REFERENCES Destino(id_destino) ON DELETE CASCADE,
     nombre VARCHAR(100) NOT NULL,
     categoria VARCHAR(50),
@@ -84,13 +84,13 @@ CREATE TABLE Recorridos (
 -- ============================
 -- TABLAS INTERMEDIAS (Reseñas)
 -- ============================
-CREATE TABLE Lugar_Reseñas (
-    id_lugar INT REFERENCES Lugar(id_lugar) ON DELETE CASCADE,
+CREATE TABLE Lugares_Reseñas (
+    id_lugares INT REFERENCES Lugares(id_lugares) ON DELETE CASCADE,
     id_reseñas INT REFERENCES Reseñas(id_reseñas) ON DELETE CASCADE,
-    PRIMARY KEY (id_lugar, id_reseñas)
+    PRIMARY KEY (id_lugares, id_reseñas)
 );
 
-CREATE TABLE Evento_Reseñas (
+CREATE TABLE Eventos_Reseñas (
     id_evento INT REFERENCES Eventos(id_eventos) ON DELETE CASCADE,
     id_reseñas INT REFERENCES Reseñas(id_reseñas) ON DELETE CASCADE,
     PRIMARY KEY (id_evento, id_reseñas)
@@ -101,3 +101,5 @@ CREATE TABLE Gastronomia_Reseñas (
     id_reseñas INT REFERENCES Reseñas(id_reseñas) ON DELETE CASCADE,
     PRIMARY KEY (id_gastronomia, id_reseñas)
 );
+
+
