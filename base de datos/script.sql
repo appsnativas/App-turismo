@@ -1,111 +1,103 @@
--- ============================
--- Script SQL para Supabase
--- Según el DER proporcionado
--- ============================
+-- Creación de la base de datos (opcional, en Supabase ya viene una asignada)
+-- CREATE DATABASE appturismo;
 
--- Tabla Usuario
+-- ============================
+-- TABLA: Usuario
+-- ============================
 CREATE TABLE Usuario (
     id_usuario SERIAL PRIMARY KEY,
-    nombre TEXT NOT NULL,
-    idioma_preferido TEXT,
-    pais_origen TEXT
+    nombre VARCHAR(100) NOT NULL,
+    idioma_preferido VARCHAR(50),
+    pais_origen VARCHAR(100)
 );
 
--- Tabla Destino
+-- ============================
+-- TABLA: Reseñas
+-- ============================
+CREATE TABLE Reseñas (
+    id_reseñas SERIAL PRIMARY KEY,
+    id_usuario INT REFERENCES Usuario(id_usuario) ON DELETE CASCADE,
+    texto TEXT,
+    puntuacion INT CHECK (puntuacion BETWEEN 1 AND 5),
+    fecha DATE DEFAULT CURRENT_DATE
+);
+
+-- ============================
+-- TABLA: Destino
+-- ============================
 CREATE TABLE Destino (
     id_destino SERIAL PRIMARY KEY,
-    nombre_ciudad TEXT NOT NULL,
-    pais TEXT NOT NULL,
+    nombre_ciudad VARCHAR(100) NOT NULL,
+    pais VARCHAR(100),
     descripcion TEXT,
-    coordenadas TEXT
+    coordenada VARCHAR(255)
 );
 
--- Tabla Lugar
+-- ============================
+-- TABLA: Lugar
+-- ============================
 CREATE TABLE Lugar (
     id_lugar SERIAL PRIMARY KEY,
-    id_destino INT NOT NULL REFERENCES Destino(id_destino) ON DELETE CASCADE,
-    nombre TEXT NOT NULL,
-    categoria TEXT,
+    id_destino INT REFERENCES Destino(id_destino) ON DELETE CASCADE,
+    nombre VARCHAR(100) NOT NULL,
+    categoria VARCHAR(50),
     descripcion TEXT,
-    horario TEXT
+    horario VARCHAR(100)
 );
 
--- Tabla Eventos
+-- ============================
+-- TABLA: Eventos
+-- ============================
 CREATE TABLE Eventos (
     id_eventos SERIAL PRIMARY KEY,
-    id_destino INT NOT NULL REFERENCES Destino(id_destino) ON DELETE CASCADE,
-    nombre TEXT NOT NULL,
-    descripcion TEXT,
-    fecha_inicio DATE,
-    fecha_fin DATE,
-    tipo_evento TEXT
-);
-
--- Tabla Rutas
-CREATE TABLE Rutas (
-    id_rutas SERIAL PRIMARY KEY,
-    id_lugar INT REFERENCES Lugar(id_lugar) ON DELETE SET NULL,
-    nombre TEXT NOT NULL,
-    descripcion TEXT,
-    duracion_estimada INTERVAL
-);
-
--- Tabla Ruta_Lugar (relación muchos a muchos)
-CREATE TABLE Ruta_Lugar (
-    id_rutas INT REFERENCES Rutas(id_rutas) ON DELETE CASCADE,
-    id_lugar INT REFERENCES Lugar(id_lugar) ON DELETE CASCADE,
-    id_usuario INT REFERENCES Usuario(id_usuario) ON DELETE CASCADE,
     id_destino INT REFERENCES Destino(id_destino) ON DELETE CASCADE,
-    orden_visita INT,
-    tiempo_estimado INTERVAL,
-    PRIMARY KEY (id_rutas, id_lugar, id_usuario, id_destino)
-);
-
--- Tabla Recomendacion
-CREATE TABLE Recomendacion (
-    id_recomendacion SERIAL PRIMARY KEY,
-    id_destino INT NOT NULL REFERENCES Destino(id_destino) ON DELETE CASCADE,
-    categoria TEXT,
+    nombre VARCHAR(100) NOT NULL,
     descripcion TEXT,
-    orden_sugerido INT
+    fecha_de_inicio DATE,
+    fecha_fin DATE,
+    tipo_de_evento VARCHAR(50)
 );
 
--- Tabla Lugar_Recomendacion (relación muchos a muchos)
-CREATE TABLE Lugar_Recomendacion (
+-- ============================
+-- TABLA: Gastronomía
+-- ============================
+CREATE TABLE Gastronomia (
+    id_gastronomia SERIAL PRIMARY KEY,
+    id_destino INT REFERENCES Destino(id_destino) ON DELETE CASCADE,
+    nombre VARCHAR(100) NOT NULL,
+    categoria VARCHAR(50),
+    descripcion TEXT,
+    horario VARCHAR(100)
+);
+
+-- ============================
+-- TABLA: Recorridos
+-- ============================
+CREATE TABLE Recorridos (
+    id_recorridos SERIAL PRIMARY KEY,
+    id_destino INT REFERENCES Destino(id_destino) ON DELETE CASCADE,
+    nombre VARCHAR(100) NOT NULL,
+    descripcion TEXT,
+    duracion_estimada VARCHAR(50)
+);
+
+-- ============================
+-- TABLAS INTERMEDIAS (Reseñas)
+-- ============================
+CREATE TABLE Lugar_Reseñas (
     id_lugar INT REFERENCES Lugar(id_lugar) ON DELETE CASCADE,
-    id_recomendacion INT REFERENCES Recomendacion(id_recomendacion) ON DELETE CASCADE,
-    PRIMARY KEY (id_lugar, id_recomendacion)
+    id_reseñas INT REFERENCES Reseñas(id_reseñas) ON DELETE CASCADE,
+    PRIMARY KEY (id_lugar, id_reseñas)
 );
 
--- Tabla Evento_Recomendacion (relación muchos a muchos)
-CREATE TABLE Evento_Recomendacion (
+CREATE TABLE Evento_Reseñas (
     id_evento INT REFERENCES Eventos(id_eventos) ON DELETE CASCADE,
-    id_recomendacion INT REFERENCES Recomendacion(id_recomendacion) ON DELETE CASCADE,
-    PRIMARY KEY (id_evento, id_recomendacion)
+    id_reseñas INT REFERENCES Reseñas(id_reseñas) ON DELETE CASCADE,
+    PRIMARY KEY (id_evento, id_reseñas)
 );
 
--- Tabla Usuario_Recomendacion (relación muchos a muchos)
-CREATE TABLE Usuario_Recomendacion (
-    id_usuario INT REFERENCES Usuario(id_usuario) ON DELETE CASCADE,
-    id_recomendacion INT REFERENCES Recomendacion(id_recomendacion) ON DELETE CASCADE,
-    fecha_guardado DATE DEFAULT CURRENT_DATE,
-    PRIMARY KEY (id_usuario, id_recomendacion)
-);
-
--- Tabla Consejo
-CREATE TABLE Consejo (
-    id_consejo SERIAL PRIMARY KEY,
-    id_destino INT NOT NULL REFERENCES Destino(id_destino) ON DELETE CASCADE,
-    id_usuario INT NOT NULL REFERENCES Usuario(id_usuario) ON DELETE CASCADE,
-    texto TEXT NOT NULL,
-    categoria TEXT
-);
-
--- Tabla Clima
-CREATE TABLE Clima (
-    id_clima SERIAL PRIMARY KEY,
-    id_destino INT NOT NULL REFERENCES Destino(id_destino) ON DELETE CASCADE,
-    fecha DATE NOT NULL,
-    temperatura NUMERIC,
-    condicion TEXT
+CREATE TABLE Gastronomia_Reseñas (
+    id_gastronomia INT REFERENCES Gastronomia(id_gastronomia) ON DELETE CASCADE,
+    id_reseñas INT REFERENCES Reseñas(id_reseñas) ON DELETE CASCADE,
+    PRIMARY KEY (id_gastronomia, id_reseñas)
 );
