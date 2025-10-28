@@ -1,0 +1,57 @@
+ion-content {
+  --background: #f9f9f9;
+}
+
+.destino-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.destino-header ion-img {
+  width: 100%;
+  max-height: 180px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 0.8rem;
+}
+
+.destino-header h2 {
+  font-weight: 600;
+  margin: 0;
+  color: #1e1e1e;
+}
+
+.pais {
+  font-size: 0.9rem;
+  color: #666;
+  margin: 0.3rem 0;
+}
+
+.descripcion {
+  font-size: 0.95rem;
+  color: #444;
+  padding: 0 1rem;
+}
+
+.coordenadas {
+  background: #fff;
+  border-radius: 10px;
+  margin: 0.5rem 0;
+  box-shadow: 0 1px 4px rgba(240, 239, 239, 0.102);
+}
+
+ion-card {
+  margin: 1rem 0;
+  border-radius: 14px;
+  box-shadow: 0 2px 6px rgba(255, 255, 255, 0.08);
+}
+
+ion-card-title {
+  font-weight: 600;
+  color: #f8f3f3;
+}
+
+ion-card-content p {
+  color: hsl(0, 0%, 95%);
+  font-size: 0.95rem;
+}

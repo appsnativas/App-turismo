@@ -1,0 +1,82 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>Destino</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Destino</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content class="ion-padding">
+    <!-- Encabezado del destino -->
+    <div class="destino-header">
+      <ion-img src="https://upload.wikimedia.org/wikipedia/commons/8/86/Barcelona_Spain_-_panoramio.jpg" alt="Imagen del destino"></ion-img>
+      <h2>Barcelona</h2>
+      <p class="pais">España</p>
+      <p class="descripcion">
+        Ciudad vibrante y cosmopolita, famosa por su arquitectura modernista, playas y vida cultural.
+      </p>
+    </div>
+
+    <ion-list lines="none">
+      <!-- Coordenadas -->
+      <ion-item class="coordenadas">
+        <ion-icon name="location-outline" slot="start"></ion-icon>
+        <ion-label>
+          <h3>Coordenadas</h3>
+          <p>41.3851° N, 2.1734° E</p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Eventos destacados</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>Explorá las actividades disponibles durante tu estadía.</p>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Gastronomía</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>Descubrí los mejores restaurantes y bares del destino.</p>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Lugares para visitar</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>Plazas, museos y monumentos imperdibles.</p>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Recorridos sugeridos</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>Rutas e itinerarios recomendados para aprovechar al máximo tu viaje.</p>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Reseñas</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>Opiniones y experiencias de otros viajeros.</p>
+      </ion-card-content>
+    </ion-card>
+  </ion-content>
+</ion-content>
+
